@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+dump_code.py
+project_dump.txt

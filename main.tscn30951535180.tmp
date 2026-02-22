@@ -1,0 +1,107 @@
+[gd_scene load_steps=17 format=3 uid="uid://dtegvpshlnb4n"]
+
+[ext_resource type="Script" uid="uid://cupufbxw5wehj" path="res://код/игрок/manager_states.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://clnvkojl7hwwr" path="res://код/игрок/idle.gd" id="2_7mycd"]
+[ext_resource type="Script" uid="uid://c33vneup0uuwy" path="res://код/игрок/move.gd" id="3_272bh"]
+[ext_resource type="Script" uid="uid://0byachyfdwkr" path="res://код/игрок/interact.gd" id="4_5vw27"]
+[ext_resource type="Script" uid="uid://kqg1665sdbw6" path="res://код/игрок/manager_states_actions.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://tfy328rwfgil" path="res://код/игрок/heal.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://c3jei5peab2w4" path="res://код/игрок/idleAction.gd" id="6_272bh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_top_color = Color(0.71475536, 0.28173006, 0.3544572, 1)
+sky_horizon_color = Color(0.68867075, 0.5726644, 0.58184624, 1)
+ground_horizon_color = Color(0.68867075, 0.5726644, 0.58184624, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+albedo_color = Color(1, 0.6509804, 0.43137255, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+material = SubResource("StandardMaterial3D_h2yge")
+size = Vector3(20, 0, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
+size = Vector3(0.2, 2, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7dm0k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+
+[node name="main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.9707165, -0.104554735, 0.21628188, 0, 0.9003188, 0.4352311, -0.2402281, 0.42248598, -0.8739543, 0, 0, 0)
+shadow_enabled = true
+
+[node name="floor" type="CSGMesh3D" parent="."]
+mesh = SubResource("BoxMesh_7dm0k")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48651445, 0)
+visible = false
+mesh = SubResource("BoxMesh_1bvp3")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 4.1672783, -2.2845414, 1.0008639, -0.39879537)
+mesh = SubResource("BoxMesh_lquwl")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="."]
+transform = Transform3D(-4.3711385e-08, 0, -4.167278, 0, 0.99999994, 0, 1, 0, -1.821575e-07, -0.3028159, 1.0008639, -2.4312527)
+mesh = SubResource("BoxMesh_lquwl")
+
+[node name="player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+mesh = SubResource("CapsuleMesh_7dm0k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+shape = SubResource("CapsuleShape3D_ig7tw")
+
+[node name="ManagerStates" type="Node" parent="player"]
+script = ExtResource("1_lquwl")
+
+[node name="Idle" type="Node" parent="player/ManagerStates"]
+script = ExtResource("2_7mycd")
+
+[node name="Move" type="Node" parent="player/ManagerStates" node_paths=PackedStringArray("camera")]
+script = ExtResource("3_272bh")
+camera = NodePath("../../Camera3D")
+
+[node name="Interact" type="Node" parent="player/ManagerStates"]
+script = ExtResource("4_5vw27")
+
+[node name="ManagerStatesActions" type="Node" parent="player"]
+script = ExtResource("5_7mycd")
+
+[node name="Idle" type="Node" parent="player/ManagerStatesActions"]
+script = ExtResource("6_272bh")
+
+[node name="Shoot" type="Node" parent="player/ManagerStatesActions"]
+
+[node name="Heal" type="Node" parent="player/ManagerStatesActions"]
+script = ExtResource("5_lquwl")
+
+[node name="Reload" type="Node" parent="player/ManagerStatesActions"]
+
+[node name="Aim" type="Node" parent="player/ManagerStatesActions"]
+
+[node name="Camera3D" type="Camera3D" parent="player"]
+transform = Transform3D(0.70710677, -0.45451945, 0.5416752, 0, 0.76604444, 0.6427876, -0.70710677, -0.45451945, 0.5416752, 8, 8.565477, 8)
+projection = 1
+current = true
+size = 10.0

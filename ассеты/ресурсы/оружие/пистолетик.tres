@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dompydusieuwu"]
+
+[ext_resource type="PackedScene" uid="uid://dpnjvbooour40" path="res://сцены/оружие/пули/bullet.tscn" id="1_8qcsh"]
+[ext_resource type="Script" uid="uid://dx8bsv3i6h1gk" path="res://код/ресурсы/WeaponData.gd" id="1_o4kjr"]
+
+[resource]
+script = ExtResource("1_o4kjr")
+name = "Пистолетик"
+magazine_size = 10
+bullet_scene = ExtResource("1_8qcsh")
+metadata/_custom_type_script = "uid://dx8bsv3i6h1gk"

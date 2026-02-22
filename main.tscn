@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dtegvpshlnb4n"]
+
+[ext_resource type="Script" uid="uid://csphda1b3jarh" path="res://код/GameRoot.gd" id="1_82xsv"]
+[ext_resource type="Script" uid="uid://b7irgt40pjecj" path="res://код/ui.gd" id="1_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://o42kfahf5i0i" path="res://сцены/player.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://cl2kwfsfd8qb0" path="res://сцены/уровни/level2.tscn" id="4_1bvp3"]
+
+[node name="GameRoot" type="Node3D" node_paths=PackedStringArray("current_level")]
+script = ExtResource("1_82xsv")
+current_level = NodePath("Level")
+
+[node name="Service" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Service"]
+
+[node name="UI" type="Control" parent="Service/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ycdy4")
+
+[node name="Label" type="Label" parent="Service/CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Скрапа: 0"
+
+[node name="GameState" type="Node" parent="."]
+
+[node name="player" parent="." instance=ExtResource("3_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Level" parent="." instance=ExtResource("4_1bvp3")]

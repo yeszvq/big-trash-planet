@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpnjvbooour40"]
+
+[ext_resource type="Script" uid="uid://c0866iuhr3v3n" path="res://код/оружие/пули/bullet.gd" id="1_44h1n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n5bgc"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m2anj"]
+material = SubResource("StandardMaterial3D_n5bgc")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_o3uxf"]
+points = PackedVector3Array(-0.099999994, -0.09999996, -0.09999996, 0.09999537, 0.099999994, 0.099999994, 0.09999537, 0.099999994, -0.099999994, 0.09999537, -0.099999994, 0.099999994, -0.099999994, 0.09999996, 0.09999996, 0.09999537, -0.099999994, -0.099999994, -0.099999994, 0.09999996, -0.09999996, -0.099999994, -0.09999996, 0.09999996)
+
+[node name="bullet" type="CharacterBody3D"]
+script = ExtResource("1_44h1n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_m2anj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_o3uxf")

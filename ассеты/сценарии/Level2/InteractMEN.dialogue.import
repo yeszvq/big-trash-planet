@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cr3fgckwuohol"
+path="res://.godot/imported/InteractMEN.dialogue-6729df2395ad8c86c7c0eae6fe5c342b.tres"
+
+[deps]
+
+source_file="res://ассеты/сценарии/Level2/InteractMEN.dialogue"
+dest_files=["res://.godot/imported/InteractMEN.dialogue-6729df2395ad8c86c7c0eae6fe5c342b.tres"]
+
+[params]
+
+defaults=true

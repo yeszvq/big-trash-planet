@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=3 format=3 uid="uid://dva2c2ni3neu4"]
+
+[ext_resource type="Script" uid="uid://dx8bsv3i6h1gk" path="res://код/ресурсы/WeaponData.gd" id="1_fs4nb"]
+[ext_resource type="PackedScene" uid="uid://dpnjvbooour40" path="res://сцены/оружие/пули/bullet.tscn" id="1_xs3sd"]
+
+[resource]
+script = ExtResource("1_fs4nb")
+default_fire_mode = 1
+spread = 0.5
+fire_rate = 0.15
+automatic = false
+bullet_scene = ExtResource("1_xs3sd")
+metadata/_custom_type_script = "uid://dx8bsv3i6h1gk"

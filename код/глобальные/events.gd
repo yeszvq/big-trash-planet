@@ -1,0 +1,6 @@
+extends Node
+
+signal try_change_level(path_to_level)
+signal change_level_started
+signal change_level_finished
+signal player_ready

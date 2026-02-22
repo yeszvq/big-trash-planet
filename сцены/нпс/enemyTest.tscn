@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=3 uid="uid://bu85i4lv3uj8k"]
+
+[ext_resource type="Script" uid="uid://cwbp8eb2327ov" path="res://код/нпс/базовый враг/enemy_body.gd" id="1_i1oid"]
+[ext_resource type="Script" uid="uid://htl4hd34gljj" path="res://код/нпс/базовый враг/ActionManagerBaseNPC.gd" id="2_n2ge8"]
+[ext_resource type="Script" uid="uid://l31gql21h1jv" path="res://код/нпс/базовый враг/shoot.gd" id="3_ftxdj"]
+[ext_resource type="Script" uid="uid://qmth1k4tn476" path="res://код/нпс/базовый враг/reload.gd" id="4_ptx1s"]
+[ext_resource type="Script" uid="uid://bdo45g4ebks3u" path="res://код/нпс/базовый враг/move.gd" id="5_53evh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1oid"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bhya8"]
+material = SubResource("StandardMaterial3D_i1oid")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_absss"]
+size = Vector3(1, 1.9, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1oid"]
+size = Vector3(20, 1, 20)
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_i1oid")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_bhya8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049999952, 0)
+shape = SubResource("BoxShape3D_absss")
+
+[node name="ActionManager" type="Node" parent="."]
+script = ExtResource("2_n2ge8")
+
+[node name="Shoot" type="Node" parent="ActionManager"]
+script = ExtResource("3_ftxdj")
+
+[node name="Reload" type="Node" parent="ActionManager"]
+script = ExtResource("4_ptx1s")
+
+[node name="Move" type="Node" parent="ActionManager"]
+script = ExtResource("5_53evh")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_i1oid")

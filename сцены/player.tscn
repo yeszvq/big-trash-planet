@@ -1,0 +1,160 @@
+[gd_scene load_steps=25 format=3 uid="uid://o42kfahf5i0i"]
+
+[ext_resource type="Script" uid="uid://c6k4hwk6mne5o" path="res://код/игрок/player.gd" id="1_wgqio"]
+[ext_resource type="Texture2D" uid="uid://caix5uqj7d4dx" path="res://ассеты/изображения/B_witch_idle.png" id="2_ecj51"]
+[ext_resource type="Script" uid="uid://cupufbxw5wehj" path="res://код/игрок/manager_states.gd" id="3_fm3nm"]
+[ext_resource type="Script" uid="uid://clnvkojl7hwwr" path="res://код/игрок/idle.gd" id="4_k0wl5"]
+[ext_resource type="Script" uid="uid://c33vneup0uuwy" path="res://код/игрок/move.gd" id="5_68j6u"]
+[ext_resource type="Script" uid="uid://ckd83ugcd1gtf" path="res://код/игрок/ActionManagerPlayer.gd" id="6_4xntb"]
+[ext_resource type="Script" uid="uid://djixa7hobiwog" path="res://код/игрок/action_shoot.gd" id="8_6ima1"]
+[ext_resource type="Script" uid="uid://cjfvdmkhrcyje" path="res://код/игрок/action_reload.gd" id="9_t8cg5"]
+[ext_resource type="Script" uid="uid://v1hr0qtay1in" path="res://код/игрок/action_heal.gd" id="10_f86ho"]
+[ext_resource type="Script" uid="uid://br0h1l3dm7xiu" path="res://код/игрок/action_interact.gd" id="11_kbp26"]
+[ext_resource type="PackedScene" uid="uid://i7shlflibnjj" path="res://сцены/reload_indicator.tscn" id="11_qb41q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+atlas = ExtResource("2_ecj51")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
+atlas = ExtResource("2_ecj51")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vivmo"]
+atlas = ExtResource("2_ecj51")
+region = Rect2(0, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cqfq"]
+atlas = ExtResource("2_ecj51")
+region = Rect2(0, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yaehf"]
+atlas = ExtResource("2_ecj51")
+region = Rect2(0, 192, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_074og"]
+atlas = ExtResource("2_ecj51")
+region = Rect2(0, 240, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cegan"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycdy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w48qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vivmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cqfq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yaehf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_074og")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xntb"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7dm0k"]
+material = SubResource("StandardMaterial3D_4xntb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qb41q"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k746b"]
+material = SubResource("StandardMaterial3D_qb41q")
+radius = 0.2
+height = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_efxa6"]
+size = Vector3(5, 2, 5)
+
+[node name="player" type="CharacterBody3D"]
+collision_layer = 3
+script = ExtResource("1_wgqio")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+visible = false
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_cegan")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="visualBody" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="visualBody"]
+mesh = SubResource("CapsuleMesh_7dm0k")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="visualBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("SphereMesh_k746b")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ig7tw")
+
+[node name="ManagerStates" type="Node" parent="."]
+script = ExtResource("3_fm3nm")
+
+[node name="Idle" type="Node" parent="ManagerStates"]
+script = ExtResource("4_k0wl5")
+
+[node name="Move" type="Node" parent="ManagerStates"]
+script = ExtResource("5_68j6u")
+
+[node name="ActionManager" type="Node" parent="."]
+script = ExtResource("6_4xntb")
+
+[node name="Shoot" type="Node" parent="ActionManager"]
+script = ExtResource("8_6ima1")
+
+[node name="Reload" type="Node" parent="ActionManager" node_paths=PackedStringArray("reloadingIndicator")]
+script = ExtResource("9_t8cg5")
+reloadingIndicator = NodePath("../../ReloadIndicator")
+
+[node name="Heal" type="Node" parent="ActionManager"]
+script = ExtResource("10_f86ho")
+
+[node name="Interact" type="Node" parent="ActionManager"]
+script = ExtResource("11_kbp26")
+
+[node name="area_interact_object" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="area_interact_object"]
+shape = SubResource("BoxShape3D_efxa6")
+
+[node name="ReloadIndicator" parent="." instance=ExtResource("11_qb41q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.7071068, -0.45451948, 0.54167527, 0, 0.7660445, 0.64278764, -0.7071068, -0.45451948, 0.54167527, 14, 13, 13)
+projection = 1
+current = true
+size = 25.0
+far = 1000.0
+
+[connection signal="body_entered" from="area_interact_object" to="." method="interact_object_detected"]
+[connection signal="body_exited" from="area_interact_object" to="." method="interact_object_undetected"]
